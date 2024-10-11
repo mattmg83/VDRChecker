@@ -1,6 +1,26 @@
 @echo off
 setlocal enabledelayedexpansion
 
+echo File Integrity Checker
+echo ----------------------
+
+:prompt
+set /p choice="Do you want to check the current directory or specify a different path? (C/S): "
+if /i "%choice%"=="C" goto current
+if /i "%choice%"=="S" goto specify
+echo Invalid choice. Please enter C or S.
+goto prompt
+
+:specify
+set /p customPath="Enter the full path of the directory to check: "
+if not exist "%customPath%" (
+    echo The specified path does not exist. Please try again.
+    goto specify
+)
+cd /d "%customPath%"
+
+:current
+echo.
 echo Checking files in: %CD%
 
 set totalFiles=0
